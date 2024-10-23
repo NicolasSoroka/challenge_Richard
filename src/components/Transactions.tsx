@@ -1,18 +1,20 @@
 import { useGetData } from "../hooks/useGetData"
 
 const Transactions = () => {
-  const data = useGetData()
+  const data  = useGetData()
 
   return (
     <div>
-      <h2>Showing the lastests transactions..</h2>
+      <h2>Mostrando las últimas transacciones...</h2>
       <ul>
-        {data.map( transaction => {
-          <li>ID: {transaction.id}</li>
-          <li>Date: {transaction.date}</li>
-          <li>Description: {transaction.description}</li>
-          <li>Amount: {transaction.amount}</li>
-        })}
+        {data.map(transaction => (
+          <li key={transaction.id}>
+            <p>ID: {transaction.id}</p>
+            <p>Fecha: {transaction.date.toLocaleDateString()}</p>
+            <p>Descripción: {transaction.description}</p>
+            <p>Monto: {transaction.amount}</p>
+          </li>
+        ))}
       </ul>
     </div>
   )
