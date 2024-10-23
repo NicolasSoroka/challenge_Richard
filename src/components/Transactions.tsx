@@ -1,23 +1,31 @@
-import { useGetData } from "../hooks/useGetData"
+import { useGetData } from "../hooks/useGetData";
+import { Transaction } from "../types/types";
 
 const Transactions = () => {
-  const data  = useGetData()
+  const { transactions: data, loading, error } = useGetData();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
 
   return (
     <div>
-      <h2>Mostrando las últimas transacciones...</h2>
       <ul>
-        {data.map(transaction => (
-          <li key={transaction.id}>
+        {data.map((transaction: Transaction) => (
+          <li className="flex flex-col gap-2" key={transaction.id}>
             <p>ID: {transaction.id}</p>
-            <p>Fecha: {transaction.date.toLocaleDateString()}</p>
+            <p>Fecha: {new Date(transaction.date).toLocaleDateString()}</p>
             <p>Descripción: {transaction.description}</p>
             <p>Monto: {transaction.amount}</p>
           </li>
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default Transactions
+export default Transactions;
